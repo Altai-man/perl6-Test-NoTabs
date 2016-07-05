@@ -49,7 +49,7 @@ my sub _is-perl-module($file) {
 }
 
 my sub _is-perl-script($file) {
-    return 1 if $file ~~ /:i\.pl6?$/;
+    return 1 if $file ~~ /:i\.pl?6?$/;
     return 1 if $file ~~ /\.t$/;
     0;
 }
