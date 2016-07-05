@@ -1,4 +1,5 @@
 # Test::NoTabs
+[![Build Status](https://travis-ci.org/Altai-man/perl6-Test-NoTabs.svg?branch=master)](https://travis-ci.org/Altai-man/perl6-Test-NoTabs)
 
 This is a port of Test::NoTabs in Perl 6. It checks your Perl 6 files that can contain tabs. If it's so, test will be failed.
 
