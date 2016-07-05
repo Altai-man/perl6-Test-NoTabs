@@ -5,7 +5,7 @@
     "provides": {
         "Test::NoTabs"         : "lib/Test/NoTabs.pm6"
     },
-    "depends"     : [ "Test::Builder" ],
+    "depends"     : [ ],
     "author" : "github:Altai-man",
     "support" : {
         "bugtracker" : "https://github.com/Altai-man/perl6-Test-NoTabs/issues"

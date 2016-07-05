@@ -2,10 +2,8 @@ use v6;
 
 unit module Test::NoTabs;
 
-use Test::Builder;
+use Test;
 use File::Find;
-
-my Test::Builder $Test .= new;
 
 my sub _all-perl-files(@dirs) {
     my $all-files = _all-files(@dirs);
@@ -21,25 +19,26 @@ my sub _all-files(@base-dirs = [$*CWD]) {
 }
 
 sub notabs-ok($file, $test-text?) is export {
-    my $text = "No tabs in $file" if !$test-text.defined;
-    my $fp = _module-to-path($file);
-    my Int $count = 0;
-    for $fp.IO.lines -> $line {
-        ++$count;
-        next if ($line ~~ /^\s*'#'/);
-        next if ($line ~~ /^\s* '=' (head[1234]|over|item|begin|for|encoding)/);
-        next if ($line ~~ /^\s* '=' (cut|back|end)/ );
-        if ( $line ~~ /\t/ ) {
-            $Test.ok(0, $text ~ " on line $count");
-            return 0;
+    subtest {
+        my $text = "No tabs in $file" if !$test-text.defined;
+        my $fp = _module-to-path($file);
+        my Int $count = 0;
+        for $fp.IO.lines -> $line {
+            ++$count;
+            next if ($line ~~ /^\s*'#'/);
+            next if ($line ~~ /^\s* '=' (head[1234]|over|item|begin|for|encoding)/);
+            next if ($line ~~ /^\s* '=' (cut|back|end)/ );
+            if ( $line ~~ /\t/ ) {
+                ok 0, $text ~ " on line $count";
+                return 0;
+            }
         }
-    }
-    if ($!) { $Test.diag("Could not open $file; $!"); return; };
+        if ($!) { diag("Could not open $file; $!"); return; };
+    }, "No tabs in file $file";
 }
 
 sub all-perl-files-ok($input) is export {
     my @files = _all-perl-files($input);
-    _make-plan;
     for @files.sort -> $f {
         notabs-ok($f, "No tabs in '$f'")
     }
@@ -73,11 +72,4 @@ my sub _module-to-path($file) {
     # }
     # NYI block
     $file;
-}
-
-my sub _make-plan {
-     unless ($Test.has_plan) {
-         $Test.plan(*);
-     }
-     $Test.expected_tests;
 }
