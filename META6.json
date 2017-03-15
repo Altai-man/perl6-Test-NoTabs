@@ -1,6 +1,7 @@
 {
     "name"        : "Test::NoTabs",
     "version"     : "0.1",
+    "tags"        : ["Testing"],
     "description" : "Test module for tabs checking",
     "provides": {
         "Test::NoTabs"         : "lib/Test/NoTabs.pm6"
